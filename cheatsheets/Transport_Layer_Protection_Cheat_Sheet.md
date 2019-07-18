@@ -130,9 +130,11 @@ Use fully qualified names in the DNS name field, and do not use unqualifed names
 
 ### Rule - Do Not Use Wildcard Certificates
 
-You should refrain from using wildcard certificates. Though they are expedient at circumventing annoying user prompts, they also [violate the principal of least privilege](https://www.owasp.org/index.php/Least_privilege) and asks the user to trust all machines, including developer's machines, the secretary's machine in the lobby and the sign-in kiosk. Obtaining access to the private key is left as an exercise for the attacker, but its made much easier when stored on the file system unprotected.
+You should refrain from using wildcard certificates. Though they are expedient at circumventing annoying user prompts, they also [violate the principal of least privilege](https://www.owasp.org/index.php/Least_privilege) by asking users to trust all servers in the same domain.
 
-Statistics gathered by Qualys for [Internet SSL Survey 2010](http://media.blackhat.com/bh-us-10/presentations/Ristic/BlackHat-USA-2010-Ristic-Qualys-SSL-Survey-HTTP-Rating-Guide-slides.pdf) indicate wildcard certificates have a 4.4% share, so the practice is not standard for public facing hosts. Finally, wildcard certificates violate [EV Certificate Guidelines](https://cabforum.org/extended-validation/).
+Wildcard should be banned on "yourcompany.io" (no "*.yourcompany.io" are allowed). But we may have some exceptions.
+
+As an example here is a use-case where wildcard certificates may be needed and give a good trade-off between security and efficiency. If you have a solution (called "solutionA") that is a used by many customers, and you regularly onboard new customers with new URLs like “customer1.solutionA.prod.companydomain.io”, “customer2.solutionA.prod.companydomain.io”,.. then a wildcard certificate for “*.solutionA.prod.companydomain.io” could be useful and dedicated to the solution only. At the end, the objective is to embed this wildcard certificate in mobile apps (with certificate pinning for instance) or in IOT devices.
 
 ### Rule - Do Not Use RFC 1918 Addresses in Certificates
 
